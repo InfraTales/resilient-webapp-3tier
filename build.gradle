@@ -1,0 +1,68 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group = 'app'
+version = '1.0.0'
+
+repositories {
+    mavenCentral()
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['lib/src/main/java']
+        }
+    }
+    test {
+        java {
+            srcDirs = ['tests/unit/java', 'tests/integration/java']
+        }
+        resources.srcDir 'tests/resources'
+    }
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+application {
+    mainClass = 'app.Main'
+}
+
+dependencies {
+    implementation 'software.amazon.awscdk:aws-cdk-lib:2.147.0'
+    implementation 'software.constructs:constructs:10.3.0'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.3'
+    testImplementation 'org.assertj:assertj-core:3.26.3'
+    testImplementation 'software.amazon.awscdk:assertions:2.147.0'
+
+    testImplementation 'software.amazon.awssdk:ec2:2.30.36'
+    testImplementation 'software.amazon.awssdk:s3:2.30.36'
+    testImplementation 'software.amazon.awssdk:sns:2.30.36'
+    testImplementation 'software.amazon.awssdk:kms:2.30.36'
+    testImplementation 'com.fasterxml.jackson.core:jackson-databind:2.17.2'
+}
+
+tasks.withType(Test).configureEach {
+    useJUnitPlatform()
+}
+
+tasks.test {
+    exclude '**/integration/**'
+}
+
+tasks.register('integrationTest', Test) {
+    description = 'Runs integration tests that query live AWS state'
+    group = 'verification'
+    useJUnitPlatform()
+    testClassesDirs = sourceSets.test.output.classesDirs
+    classpath = sourceSets.test.runtimeClasspath
+    include '**/integration/**'
+    shouldRunAfter(tasks.test)
+}

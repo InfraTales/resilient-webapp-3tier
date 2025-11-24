@@ -1,0 +1,25 @@
+sequenceDiagram
+  participant Dev as Developer
+  participant CDK as CDK CLI (gradle run)
+  participant CFN as CloudFormation
+  participant AWS as AWS Services
+  participant Ops as Ops Email
+
+  Dev->>CDK: cdk deploy --context ...
+  CDK->>CFN: Submit synthesized template
+  CFN->>AWS: Create VPC, subnets, NAT, SGs
+  CFN->>AWS: Launch EC2 (private) + IAM role
+  CFN->>AWS: Provision RDS MySQL (multi-AZ)
+  CFN-->>Dev: Stack outputs (VPC, subnets, RDS endpoint)
+
+  loop Health Monitoring
+    AWS-->>AWS: CloudWatch CPU metrics
+    AWS-->>AWS: Alarms evaluate thresholds
+    AWS-->>Ops: SNS email notification
+  end
+
+  opt Auditing enabled
+    Dev->>CDK: enableCloudTrail=true
+    CDK->>CFN: Add CloudTrail + S3 (KMS)
+    CFN->>AWS: Trail delivers logs to encrypted bucket
+  end

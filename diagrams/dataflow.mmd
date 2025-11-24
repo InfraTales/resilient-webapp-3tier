@@ -1,0 +1,8 @@
+%% InfraTales Dataflow Diagram Template
+%% Use this for event-driven or data processing flows.
+
+flowchart LR
+  Source[Data Source] -->|Ingest| Stream[Kinesis/Kafka]
+  Stream -->|Process| Lambda[Lambda Function]
+  Lambda -->|Store| S3[S3 Bucket]
+  Lambda -->|Index| ES[OpenSearch]

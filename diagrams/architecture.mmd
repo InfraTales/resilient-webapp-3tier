@@ -1,0 +1,34 @@
+flowchart TB
+  subgraph VPC[WebApp VPC 10.0.0.0/16]
+    IGW[Internet Gateway]
+    subgraph Public[Public Subnets /24]
+      NAT1[NAT Gateway AZ1]
+      NAT2[NAT Gateway AZ2]
+    end
+    subgraph Private[Private Subnets /24]
+      EC21[EC2 Web 1 (t3.medium)]
+      EC22[EC2 Web 2 (t3.medium)]
+      RDS[(RDS MySQL t3.micro Multi-AZ)]
+    end
+    IGW <-.-> Public
+    Public -->|0.0.0.0/0| NAT1
+    Public -->|0.0.0.0/0| NAT2
+    NAT1 -.-> EC21
+    NAT2 -.-> EC22
+    EC21 -->|3306| RDS
+    EC22 -->|3306| RDS
+  end
+
+  KMS[KMS CMK (rotation on)]
+  SNS[SNS Topic alerts]
+  CW[CloudWatch CPU Alarms]
+  CT[Optional CloudTrail]
+  CTB[S3 Bucket (logs, KMS, lifecycle)]
+
+  EC21 -. metrics .-> CW
+  EC22 -. metrics .-> CW
+  CW --> SNS
+  RDS --> KMS
+  CT --> CTB
+  CTB --> KMS
+  SNS -->|Email| AlertEmail[Configured Email]
