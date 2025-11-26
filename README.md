@@ -93,4 +93,14 @@ See `CONTRIBUTING.md` for workflow, testing, and security guidelines.
 This repository is released under the MIT License (see `LICENSE`).
 
 ---
-InfraTales | Accelerating secure, cost-aware IaC delivery.
+
+<p align="center">
+  Made with ❤️ by Rahul Ladumor
+</p>
+
+<div align="center">
+  <a href="https://infratales.com">Website</a> •
+  <a href="https://infratales.com/projects">Projects</a> •
+  <a href="https://infratales.com/premium">Premium</a> •
+  <a href="https://infratales.com/newsletter">Newsletter</a>
+</div>
