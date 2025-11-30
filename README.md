@@ -39,6 +39,7 @@ Public, production-focused CDK (Java) reference that stands up a resilient three
 - CDK bootstrap in target account/region
 
 ## Deployment (example for dev)
+For a detailed walkthrough, refer to the Quick Start section above.
 ```bash
 export ENVIRONMENT_SUFFIX=dev
 export AWS_REGION=eu-north-1
@@ -54,6 +55,7 @@ cdk deploy --all --require-approval never \
 ```
 
 ## Testing
+See the Testing section above for more details.
 - Unit: `gradle test`
 - Integration: `gradle integrationTest` (requires deployed stack and `cfn-outputs/flat-outputs.json` from stack outputs)
 
