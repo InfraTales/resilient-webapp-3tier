@@ -88,21 +88,34 @@ See the Testing section above for more details.
 - **Bucket name collision**: adjust `PROJECT_NAME`/`ENVIRONMENT`/`ENVIRONMENT_SUFFIX`
 - **Integration tests skipped**: ensure `cfn-outputs/flat-outputs.json` is present after deploy
 
-## Contributing
-See `CONTRIBUTING.md` for workflow, testing, and security guidelines.
+## 👤 Author
 
-## License
-This repository is released under the MIT License (see `LICENSE`).
+**Rahul Ladumor** - Founder of InfraTales
+
+- 🌐 Portfolio: [rahulladumor.in](https://www.rahulladumor.in)
+- ☁️ Blog: [acloudwithrahul.in](https://www.acloudwithrahul.in)
+- 💼 GitHub: [@rahulladumor](https://github.com/rahulladumor)
+- 🏢 Organization: [InfraTales](https://github.com/InfraTales)
+- 📧 Email: rahul.ladumor@infratales.com
+- 💬 LinkedIn: [linkedin.com/in/rahulladumor](https://www.linkedin.com/in/rahulladumor)
+
+## 🤝 Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for workflow, testing, and security guidelines.
+
+## 📄 License
+
+This repository is released under the MIT License (see [LICENSE](LICENSE)).
 
 ---
 
-<p align="center">
-  Made with ❤️ by Rahul Ladumor
-</p>
-
 <div align="center">
-  <a href="https://infratales.com">Website</a> •
-  <a href="https://infratales.com/projects">Projects</a> •
-  <a href="https://infratales.com/premium">Premium</a> •
-  <a href="https://infratales.com/newsletter">Newsletter</a>
+
+**Built with ❤️ by [InfraTales](https://github.com/InfraTales)**
+
+<a href="https://infratales.com">Website</a> •
+<a href="https://infratales.com/projects">Projects</a> •
+<a href="https://infratales.com/premium">Premium</a> •
+<a href="https://infratales.com/newsletter">Newsletter</a>
+
 </div>
