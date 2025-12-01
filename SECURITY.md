@@ -7,7 +7,7 @@ We take security seriously at InfraTales. If you discover a security vulnerabili
 ### How to Report
 
 1. **Do NOT** create a public GitHub issue for security vulnerabilities
-2. Email us at: **security@infratales.com**
+2. Email us at: **rahul.ladumor@infratales.com**
 3. Include detailed information about the vulnerability
 4. Allow reasonable time (48-72 hours) for initial response
 
@@ -40,7 +40,7 @@ When using this project:
 
 ## Contact
 
-- **Security Issues**: security@infratales.com
+- **Security Issues**: rahul.ladumor@infratales.com
 - **General Inquiries**: rahul.ladumor@infratales.com
 - **GitHub**: [@rahulladumor](https://github.com/rahulladumor)
 
