@@ -1,38 +1,70 @@
-# Runbook
+# Operations Runbook
 
-## Deploy
-1) Set environment variables (examples):
-   - `ENVIRONMENT_SUFFIX=dev`
-   - `AWS_REGION=eu-north-1`
-   - `OFFICE_CIDR=198.51.100.0/24`
-   - `ALERT_EMAIL=ops@example.com`
-2) Bootstrap if needed: `cdk bootstrap --context environmentSuffix=$ENVIRONMENT_SUFFIX`
-3) Build & unit test: `gradle clean test`
-4) Synthesize: `cdk synth --app "gradle run"`
-5) Deploy: `cdk deploy --all --require-approval never --context environmentSuffix=$ENVIRONMENT_SUFFIX`
+## Overview
+This runbook provides operational procedures for managing and maintaining this infrastructure.
 
-## Verify
-- Check CloudFormation stack status is `CREATE_COMPLETE`
-- Confirm SNS subscription email was confirmed
-- Validate EC2 instances are running in private subnets
-- Retrieve RDS endpoint from stack outputs
+## Prerequisites
+- AWS CLI configured
+- Terraform/CDK/Pulumi installed
+- Appropriate IAM permissions
 
-## Operations
-- **Scaling**: adjust EC2 instance type/count in `createEc2Instances`; re-deploy
-- **Patching**: bake AMI updates or use SSM Patch Manager; update ASG (if added) / instance type then deploy
-- **Backups**: RDS automated backups enabled; adjust retention in code if policy requires
-- **Key rotation**: KMS key rotation is enabled by default; monitor in KMS console
+## Common Operations
 
-## Logs & Metrics
-- EC2/SSM/CloudWatch Agent metrics via managed policy on the instance role
-- CloudWatch alarms on EC2 CPU -> SNS topic
-- Optional CloudTrail logs to KMS-encrypted S3 bucket when enabled
+### Deployment
+```bash
+# Development
+./scripts/deploy.sh dev
 
-## Incident Response
-- Quarantine EC2: edit web SG to deny ingress; optionally stop instances
-- Database credentials: rotate via Secrets Manager entry created by CDK
-- Audit: enable CloudTrail and re-deploy if not already enabled
+# Production
+./scripts/deploy.sh prod
+```
 
-## Teardown
-- Destroy stacks: `cdk destroy --all --force --context environmentSuffix=$ENVIRONMENT_SUFFIX`
-- Remove remaining buckets/log groups if destroy fails (after confirming contents)
+### Monitoring
+- CloudWatch Dashboard: Check AWS Console
+- Alerts: Configured via SNS
+- Logs: CloudWatch Logs
+
+### Troubleshooting
+
+#### Issue: Deployment Fails
+**Symptoms**: Terraform/CDK apply fails
+**Resolution**:
+1. Check AWS credentials
+2. Verify IAM permissions
+3. Review error logs
+4. Check resource quotas
+
+#### Issue: High Costs
+**Symptoms**: Unexpected AWS charges
+**Resolution**:
+1. Review Cost Explorer
+2. Check for unused resources
+3. Verify auto-scaling policies
+4. Review instance types
+
+### Maintenance Windows
+- Preferred: Sunday 02:00-06:00 UTC
+- Avoid: Business hours (09:00-17:00 local time)
+
+### Escalation
+1. Team Lead
+2. DevOps Manager
+3. On-call Engineer
+
+## Emergency Procedures
+
+### Rollback
+```bash
+# Terraform
+terraform apply -var-file=previous.tfvars
+
+# CDK
+cdk deploy --previous-version
+
+# Pulumi
+pulumi stack select previous
+pulumi up
+```
+
+### Disaster Recovery
+See [DISASTER_RECOVERY.md](DISASTER_RECOVERY.md)

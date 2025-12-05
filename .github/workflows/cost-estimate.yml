@@ -1,0 +1,28 @@
+name: Cost Estimation
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  infracost:
+    if: hashFiles('*.tf') != ''
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Infracost
+        uses: infracost/actions/setup@v2
+        with:
+          api-key: ${{ secrets.INFRACOST_API_KEY }}
+      
+      - name: Generate cost estimate
+        run: |
+          infracost breakdown --path . --format json --out-file /tmp/infracost.json || true
+      
+      - name: Post comment
+        uses: infracost/actions/comment@v1
+        with:
+          path: /tmp/infracost.json
+          behavior: update
+        continue-on-error: true
